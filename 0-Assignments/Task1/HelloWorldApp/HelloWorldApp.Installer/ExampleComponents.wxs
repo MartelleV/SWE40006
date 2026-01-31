@@ -1,0 +1,77 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+	<Fragment>
+		<ComponentGroup Id="ExampleComponents" Directory="INSTALLFOLDER">
+
+			<Component Id="AppExe">
+				<File
+				  Id="HelloWorldApp_exe"
+				  Source="$(var.HelloWorldApp.TargetDir)HelloWorldApp.exe"
+				  KeyPath="yes"
+        />
+			</Component>
+
+			<Component Id="AppShortcut">
+				<RegistryKey
+				  Root="HKCU"
+				  Key="Software\VuPhanHoangAn\HelloWorldApp"
+        >
+					<RegistryValue
+					  Type="string"
+					  Name="InstallLocation"
+					  Value="[INSTALLFOLDER]"
+					  KeyPath="yes"
+          />
+				</RegistryKey>
+				<Shortcut
+				  Id="StartMenuShortcut"
+				  Name="HelloWorldApp"
+				  Description="HelloWorldApp — Multi-DLL WiX Deployment Demo"
+				  Directory="ProgramMenuFolder"
+				  WorkingDirectory="INSTALLFOLDER"
+				  Target="[INSTALLFOLDER]HelloWorldApp.exe"
+        />
+			</Component>
+
+			<Component Id="AppDll">
+				<File
+				  Id="HelloWorldApp_dll"
+				  Source="$(var.HelloWorldApp.TargetDir)HelloWorldApp.dll"
+				  KeyPath="yes"
+        />
+			</Component>
+
+			<Component Id="RuntimeConfig">
+				<File
+				  Id="HelloWorldApp_runtimeconfig"
+				  Source="$(var.HelloWorldApp.TargetDir)HelloWorldApp.runtimeconfig.json"
+				  KeyPath="yes"
+        />
+			</Component>
+
+			<Component Id="DepsJson">
+				<File
+				  Id="HelloWorldApp_deps"
+				  Source="$(var.HelloWorldApp.TargetDir)HelloWorldApp.deps.json"
+				  KeyPath="yes"
+        />
+			</Component>
+
+			<Component Id="MathLibDll">
+				<File
+				  Id="MathLib_dll"
+				  Source="$(var.HelloWorldApp.TargetDir)MathLib.dll"
+				  KeyPath="yes"
+        />
+			</Component>
+
+			<Component Id="StringLibDll">
+				<File
+				  Id="StringLib_dll"
+				  Source="$(var.HelloWorldApp.TargetDir)StringLib.dll"
+				  KeyPath="yes"
+        />
+			</Component>
+
+		</ComponentGroup>
+	</Fragment>
+</Wix>

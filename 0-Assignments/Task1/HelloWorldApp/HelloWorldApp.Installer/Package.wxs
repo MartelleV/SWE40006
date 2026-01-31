@@ -1,0 +1,21 @@
+﻿<Wix
+  xmlns="http://wixtoolset.org/schemas/v4/wxs"
+  xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui"
+>
+	<Package
+	  Id="VuPhanHoangAn_104775412.HelloWorldApp"
+	  Name="HelloWorldApp"
+	  Manufacturer="VuPhanHoangAn 104775412"
+	  Version="1.0.0.0"
+	  UpgradeCode="b2c3d4e5-f6a7-8901-bcde-f12345678901"
+  >
+
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+
+		<Feature Id="Main">
+			<ComponentGroupRef Id="ExampleComponents" />
+		</Feature>
+
+		<ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+	</Package>
+</Wix>
