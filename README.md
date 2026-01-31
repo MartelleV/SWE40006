@@ -7,6 +7,7 @@ This repository contains my coursework, implementations, and practical exercises
 ## Author
 
 **Vu Phan Hoang An**
+
 GitHub: **MartelleV**
 
 ---
