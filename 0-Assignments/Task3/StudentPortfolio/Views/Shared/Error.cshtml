@@ -1,0 +1,23 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<section class="error-section fade-in">
+    <div class="error-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+    </div>
+    <h1 class="page-title">Something went wrong</h1>
+    <p class="page-subtitle">An error occurred while processing your request.</p>
+</section>
+
+@if (Model.ShowRequestId)
+{
+    <div class="error-detail fade-in delay-1">
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </div>
+}

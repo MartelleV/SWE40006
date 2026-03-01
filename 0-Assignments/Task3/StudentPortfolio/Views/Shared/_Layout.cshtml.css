@@ -1,0 +1,19 @@
+﻿/* Layout scoped styles — kept minimal; global theme in site.css */
+
+a.navbar-brand {
+  white-space: normal;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-icon {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.navbar-brand:hover .brand-icon {
+  opacity: 1;
+  transform: rotate(90deg);
+}

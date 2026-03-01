@@ -1,0 +1,163 @@
+@model StudentPortfolio.Models.MusicViewModel
+@using StudentPortfolio.Models
+@{
+    ViewData["Title"] = "My Music";
+}
+
+<section class="music-hero fade-in">
+    <div class="music-hero-icon">♫</div>
+    <h1 class="page-title">My Music</h1>
+    <p class="page-subtitle">A curated collection of my musical favorites</p>
+</section>
+
+<div class="music-tabs fade-in delay-1">
+    <ul class="nav nav-pills mb-4" id="musicTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="genres-tab" data-bs-toggle="pill"
+                    data-bs-target="#genres" type="button" role="tab"
+                    aria-controls="genres" aria-selected="true">
+                <span>Genres</span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="artists-tab" data-bs-toggle="pill"
+                    data-bs-target="#artists" type="button" role="tab"
+                    aria-controls="artists" aria-selected="false">
+                <span>Artists</span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="songs-tab" data-bs-toggle="pill"
+                    data-bs-target="#songs" type="button" role="tab"
+                    aria-controls="songs" aria-selected="false">
+                <span>Songs</span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="albums-tab" data-bs-toggle="pill"
+                    data-bs-target="#albums" type="button" role="tab"
+                    aria-controls="albums" aria-selected="false">
+                <span>Albums</span>
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="musicTabsContent">
+
+        <!-- Genres -->
+        <div class="tab-pane fade show active" id="genres" role="tabpanel" aria-labelledby="genres-tab">
+            <div class="row g-4">
+                @{
+                    var genreEmoji = new Dictionary<string, string> {
+                        { "Rock", "🎸" }, { "Blues", "🎵" },
+                        { "Jazz", "🎷" }, { "Dance", "🎧" }
+                    };
+                    var genreColors = new Dictionary<string, string> {
+                        { "Rock", "#ef4444" }, { "Blues", "#3b82f6" },
+                        { "Jazz", "#f59e0b" }, { "Dance", "#a78bfa" }
+                    };
+                    var genreDescriptions = new Dictionary<string, string> {
+                        { "Rock", "Hard Rock & Progressive Rock" },
+                        { "Blues", "Blues & Soul" },
+                        { "Jazz", "Jazz & Fusion" },
+                        { "Dance", "Electronic & Dance" }
+                    };
+                }
+                @foreach (var genre in Model.Genres)
+                {
+                    var color = genreColors.GetValueOrDefault(genre, "#a78bfa");
+                    var icon = genreEmoji.GetValueOrDefault(genre, "🎵");
+                    var description = genreDescriptions.GetValueOrDefault(genre, "Music Genre");
+                    <div class="col-6 col-md-3">
+                        <div class="genre-card" style="--genre-color: @color">
+                            <span class="genre-icon">@icon</span>
+                            <h3 class="genre-name">@genre</h3>
+                            <p class="genre-description">@description</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Artists -->
+        <div class="tab-pane fade" id="artists" role="tabpanel" aria-labelledby="artists-tab">
+            <div class="row g-3">
+                @foreach (var artist in Model.Artists)
+                {
+                    var nameForInit = artist.Name.StartsWith("The ") ? artist.Name[4..] : artist.Name;
+                    var parts = nameForInit.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    var initials = parts.Length >= 2
+                        ? $"{parts[0][0]}{parts[^1][0]}"
+                        : nameForInit[..Math.Min(2, nameForInit.Length)];
+                    var imagePath = ImageConfig.GetArtistImage(artist.Name);
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="music-card artist-card">
+                            <div class="artist-image-wrapper">
+                                <img src="@imagePath" 
+                                     alt="@artist.Name" 
+                                     class="artist-image"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                                <div class="artist-avatar" style="display: none;">@initials.ToUpper()</div>
+                            </div>
+                            <div class="music-card-info">
+                                <h4 class="music-card-title">@artist.Name</h4>
+                                <span class="music-card-subtitle">@artist.Genre</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Songs -->
+        <div class="tab-pane fade" id="songs" role="tabpanel" aria-labelledby="songs-tab">
+            <div class="row g-3">
+                @{ var songIdx = 1; }
+                @foreach (var song in Model.Songs)
+                {
+                    <div class="col-12 col-md-6">
+                        <div class="music-card song-card">
+                            <span class="song-number">@(songIdx.ToString("D2"))</span>
+                            <div class="song-play-icon">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M3 2.5v11l10-5.5L3 2.5z"/>
+                                </svg>
+                            </div>
+                            <div class="music-card-info">
+                                <h4 class="music-card-title">@song.Title</h4>
+                                <span class="music-card-subtitle">@song.Artist</span>
+                            </div>
+                        </div>
+                    </div>
+                    songIdx++;
+                }
+            </div>
+        </div>
+
+        <!-- Albums -->
+        <div class="tab-pane fade" id="albums" role="tabpanel" aria-labelledby="albums-tab">
+            <div class="row g-4">
+                @foreach (var album in Model.Albums)
+                {
+                    var imagePath = ImageConfig.GetAlbumImage(album.Title);
+                    <div class="col-6 col-sm-4 col-lg-3">
+                        <div class="album-card">
+                            <div class="album-cover-wrapper">
+                                <img src="@imagePath" 
+                                     alt="@album.Title" 
+                                     class="album-cover"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                                <div class="album-art-placeholder" style="display: none;">♫</div>
+                            </div>
+                            <div class="album-info">
+                                <h4 class="album-title">@album.Title</h4>
+                                <span class="album-artist">@album.Artist</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
