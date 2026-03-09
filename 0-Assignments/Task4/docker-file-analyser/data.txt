@@ -1,0 +1,19 @@
+Docker is an open-source platform for developing, shipping, and running
+applications.
+Docker enables developers to separate applications from infrastructure. With
+Docker,
+you can manage infrastructure the same way you manage applications.
+Containers allow developers to package an application with all of its
+dependencies
+into a standardised unit for software development. Docker containers are
+lightweight
+and efficient compared to virtual machines.
+Docker Hub is a cloud-based registry service that allows you to link code
+repositories,
+build images, test them, and push to a Docker repository. Docker makes
+deployment
+faster, consistent, and reliable across different environments and machines.
+The Docker engine is the core technology powering containerisation. It allows
+applications to run in isolated containers, ensuring consistency and
+portability.
+Docker has revolutionised how software is deployed and scaled in production.
